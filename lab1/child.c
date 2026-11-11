@@ -22,6 +22,8 @@ static void process_line(char *line, int line_len) {
         start = 1;
     }
 
+    if (start >= line_len) return;
+
     int valid = 1;
     for (int j = start; j < line_len; ++j) {
         if (line[j] >= '0' && line[j] <= '9') {
@@ -37,7 +39,7 @@ static void process_line(char *line, int line_len) {
             num = -num;
         }
 
-        if (num < 0 || is_prime(num)) {
+        if (num <= 1 || is_prime(num)) {
             _exit(0);
         } else {
             char out_buf[64];
@@ -46,13 +48,9 @@ static void process_line(char *line, int line_len) {
             int r_len = 0;
             int len = 0;
 
-            if (temp == 0) {
-                rev[r_len++] = '0';
-            } else {
-                while (temp > 0) {
-                    rev[r_len++] = (char)('0' + (temp % 10));
-                    temp /= 10;
-                }
+            while (temp > 0) {
+                rev[r_len++] = (char)('0' + (temp % 10));
+                temp /= 10;
             }
 
             while (r_len > 0) {
