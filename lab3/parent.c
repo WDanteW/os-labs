@@ -64,6 +64,13 @@ int main(void) {
         shm_unlink(shm_name);
         die("error: failed to create semaphores\n");
     }
+    char child_path[1024];
+    ssize_t plen = readlink("/proc/self/exe", child_path, sizeof(child_path) - 1);
+    if (plen == -1) die("error: failed to read /proc/self/exe\n");
+    child_path[plen] = '\0';
+    char *slash = strrchr(child_path, '/');
+    if (!slash) die("error: bad executable path\n");
+    strcpy(slash + 1, "child");
 
     pid_t child = fork();
     if (child == -1) die("error: failed to fork\n");
@@ -71,7 +78,7 @@ int main(void) {
     if (child == 0) {
         if (dup2(file, STDIN_FILENO) == -1) die("error: dup2 failed\n");
         close(file);
-        execl("./child", "child", shm_name, sem_empty_name, sem_full_name, NULL);
+        execl(child_path, "child", shm_name, sem_empty_name, sem_full_name, NULL);
         die("error: failed to exec\n");
     }
     close(file);

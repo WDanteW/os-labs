@@ -2,7 +2,7 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 
-static char CHILD_PROGRAM_NAME[] = "child";
+static char CHILD_PROGRAM_NAME[] = "child1";
 
 static void write_error(const char *msg, size_t len) {
     write(STDERR_FILENO, msg, len);

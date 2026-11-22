@@ -7,6 +7,7 @@ set(CMAKE_C_EXTENSIONS ON)
 add_compile_options(-Wall -Wextra -Werror -pedantic)
 
 add_executable(os_labs lab1/parent.c)
+add_executable(child1 lab1/child.c)
 
 add_executable(gaussian lab2/gaussian_threads.c)
 target_link_libraries(gaussian PRIVATE pthread m)
