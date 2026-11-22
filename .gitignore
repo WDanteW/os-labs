@@ -5,3 +5,7 @@ parent
 child
 gaussian
 nums.txt
+*.so
+lab4_prog1
+lab4_prog2
+child1
